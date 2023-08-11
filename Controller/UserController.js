@@ -83,7 +83,9 @@ const Registration_data_Get=async(req,res)=>{
 
 const Registration_data_Update=async(req,res)=>{
     var data= await form.findByIdAndUpdate({_id:req.params._id},req.body);
+    console.log('hello');
     res.status(200).json({
+        
         data
     })
 };
