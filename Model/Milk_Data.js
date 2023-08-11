@@ -1,0 +1,12 @@
+const mongoose  = require("mongoose");
+const Milk_Sell_Data = new mongoose.Schema({
+    
+    date:{type:String},
+    Month:{type:String},
+    year:{type:String},
+    Morning_Milk:{type:Number},
+    Night_Milk:{type:Number}
+});
+
+const Milk_Data_Schema = mongoose.model('Milk_Sell', Milk_Sell_Data);
+module.exports=Milk_Data_Schema;
