@@ -9,7 +9,7 @@ var debug = require('debug')('milk:server');
 var http = require('http');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/Milk')
+mongoose.connect('mongodb+srv://manav1010:manav2004@cluster0.z2pqann.mongodb.net/Milk')
   .then(() => console.log('Connected!'));
 /**
  * Get port from environment and store in Express.
