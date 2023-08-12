@@ -15,7 +15,7 @@ mongoose.connect('mongodb+srv://milk:milk123@cluster0.44jx0hl.mongodb.net/Milk')
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '1000');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
