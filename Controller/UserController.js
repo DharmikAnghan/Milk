@@ -1,8 +1,8 @@
 var form=require("../Model/RegisterForm");
-var Login_Form=require("../Model/LoginForm");
 var customer_data=require("../Model/Final_Bill_Data");
 var Milk_Data_Require=require("../Model/Milk_Data");
 var product_Add_Data=require("../Model/Product_Add");
+const storage = require('node-persist');
 
 var nodemailer = require('nodemailer');
 
@@ -21,9 +21,7 @@ const Registration_data=async(req,res)=>{
     {
         if(d1.length==0)
         {
-
             var a = await form.create(req.body);
-
             var otp = ("" + Math.random()).substring(2, 8)
 
             var mailOptions = {
@@ -92,34 +90,39 @@ const Registration_data_Update=async(req,res)=>{
 
 const Login_Data=async(req,res)=>
 {
-    var data=await form.find({'Mobile_Number':req.body.Mobile_Number});
+   var data = await form.find({"Mobile_Number":req.body.Mobile_Number});
 
-    if(data.length==0)
-    {
-        res.status(200).json({
-            status:"Your Number is Not register"
-         })
-    }
-    else
-    {
-        var d=await form.find({'password':req.body.password});
-        if(d.length!=0)
+
+   if(data.length!=0)
+   {
+        if(data[0].password==req.body.password)
         {
-            var a=await Login_Form.create(req.body);
-            res.status(200).json({
-                a
-            })
+            await storage.init( /* options ... */ );
+            await storage.setItem('user_id',data[0].id);
+
+            res.status(200).json(
+                "success"
+            )
         }
         else
         {
-            res.status(200).json({
-                status:"Wrong Password"
-             })
+            res.status(200).json(
+                "check your email and password"
+            )
         }
-    }
+   }
+   else
+   {
+        res.status(200).json(
+            "check your email and password"
+        )
+   }
 };
 
 const customer_Sell_Data=async(req,res)=>{
+
+    await storage.init( /* options ... */ );
+   var id =  await storage.getItem('user_id');
 
     const currentDate = new Date();
     req.body.date=currentDate.getDate();
