@@ -16,7 +16,8 @@ const Sell_Data = new mongoose.Schema({
         enum: ['Received', 'Panding'],
         required: true,
     },
-    customer_id:{type:String}
+    customer_id:{type:String},
+    user_id:{type:String}
 });
 
 

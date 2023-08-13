@@ -5,7 +5,8 @@ const Milk_Sell_Data = new mongoose.Schema({
     Month:{type:String},
     year:{type:String},
     Morning_Milk:{type:Number},
-    Night_Milk:{type:Number}
+    Night_Milk:{type:Number},
+    user_id:{type:String}
 });
 
 const Milk_Data_Schema = mongoose.model('Milk_Sell', Milk_Sell_Data);

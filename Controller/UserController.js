@@ -4,6 +4,7 @@ var Milk_Data_Require=require("../Model/Milk_Data");
 var product_Add_Data=require("../Model/Product_Add");
 const storage = require('node-persist');
 
+
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
@@ -56,41 +57,30 @@ const Registration_data=async(req,res)=>{
     }
 };
 const Registration_data_Get=async(req,res)=>{
-    let query = {};
-
-    if (req.query.First_Name) {
-        console.log("name");
-        query = req.query.First_Name;
-    }
-
-    if (req.query.email) {
-        console.log("email");
-        query = req.query.email;
-    }
-
-    if (req.query.Mobile_Number) {
-        
-        console.log("number");
-        query = req.query.Mobile_Number;
-    }
-
-    form.find().then(record => {
-        res.json(record);   
-    });
+    //only req.qurey lakhvu
+    var id1 = req.query;
+    var data= await form.find(id1);
+    res.status(200).json(
+        data
+    )
 };
 
 const Registration_data_Update=async(req,res)=>{
-    var data= await form.findByIdAndUpdate({_id:req.params._id},req.body);
-    console.log('hello');
-    res.status(200).json({
-        
+    var id = req.params.id;
+    var data= await form.findByIdAndUpdate(id,req.body);
+
+    res.status(200).json(
         data
-    })
+    )
 };
 
 const Login_Data=async(req,res)=>
 {
-   var data = await form.find({"Mobile_Number":req.body.Mobile_Number});
+    await storage.init( /* options ... */ );
+    var id =  await storage.getItem('user_id');
+    req.body.user_id=id;
+    
+    var data = await form.find({"Mobile_Number":req.body.Mobile_Number});
 
 
    if(data.length!=0)
@@ -122,7 +112,8 @@ const Login_Data=async(req,res)=>
 const customer_Sell_Data=async(req,res)=>{
 
     await storage.init( /* options ... */ );
-   var id =  await storage.getItem('user_id');
+    var id =  await storage.getItem('user_id');
+    req.body.user_id=id;
 
     const currentDate = new Date();
     req.body.date=currentDate.getDate();
@@ -150,6 +141,10 @@ const customer_Sell_Data=async(req,res)=>{
 
 const Milk_Data=async(req,res)=>{
 
+    await storage.init( /* options ... */ );
+    var id =  await storage.getItem('user_id');
+    req.body.user_id=id;
+
     const currentDate = new Date();
     req.body.date=currentDate.getDate();
     req.body.Month=currentDate.getMonth() + 1;
@@ -161,12 +156,17 @@ const Milk_Data=async(req,res)=>{
     })
 };
 
-const _Product_data_=async(req,res)=>
+const _Product_data_= async(req,res)=>
 {
+    await storage.init( /* options ... */ );
+    var id =  await storage.getItem('user_id');
+    req.body.user_id=id;
+
     var obj = {
         "product_name":req.body.product_name,
         "product_price":req.body.product_price,
-        "product_image":req.file.originalname
+        "product_image":req.file.originalname,
+        "user_id":req.body.user_id
        }
     var a=await product_Add_Data.create(obj);
     res.status(200).json({
