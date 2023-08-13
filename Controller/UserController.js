@@ -36,9 +36,9 @@ const Registration_data=async(req,res)=>{
                 if (error) {
                   console.log(error);
                 } else {
-                    res.status(200).json({
+                    res.status(200).json(
                         a
-                   })
+                   )
                 }
               });
             
@@ -134,9 +134,9 @@ const customer_Sell_Data=async(req,res)=>{
     req.body.Sell_Time=currentTime;
 
     var a=await customer_data.create(req.body);
-    res.status(200).json({
+    res.status(200).json(
         a
-    })
+    )
 };
 
 const Milk_Data=async(req,res)=>{
@@ -151,9 +151,9 @@ const Milk_Data=async(req,res)=>{
     req.body.year=currentDate.getFullYear();
 
     var a=await Milk_Data_Require.create(req.body);
-    res.status(200).json({
+    res.status(200).json(
         a
-    })
+    )
 };
 
 const _Product_data_= async(req,res)=>
@@ -169,9 +169,9 @@ const _Product_data_= async(req,res)=>
         "user_id":req.body.user_id
        }
     var a=await product_Add_Data.create(obj);
-    res.status(200).json({
+    res.status(200).json(
         a
-    })
+    )
 };
 module.exports={Registration_data,Login_Data,customer_Sell_Data,Registration_data_Get,Milk_Data,
     Registration_data_Update,_Product_data_}
