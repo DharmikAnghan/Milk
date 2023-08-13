@@ -1,6 +1,6 @@
 {
-  "name": "y",
-  "version": "0.0.0",
+  "name": "nodejs-Milk",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node server.js"
