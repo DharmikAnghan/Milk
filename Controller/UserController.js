@@ -56,14 +56,23 @@ const Registration_data=async(req,res)=>{
             })}
     }
 };
-const Registration_data_Get=async(req,res)=>{
+const Registration_data_Name=async(req,res)=>{
     //only req.qurey lakhvu
-    var id1 = req.query;
+    var id1 = req.params.name;
     var data= await form.find(id1);
     res.status(200).json(
         data
     )
 };
+const Registration_data_Number=async(req,res)=>{
+    
+    var id1 = req.params.number;
+    var data= await form.find(id1);
+    res.status(200).json(
+        data
+    )
+};
+
 
 const Registration_data_Update=async(req,res)=>{
     var id = req.params.id;
@@ -138,7 +147,15 @@ const customer_Sell_Data=async(req,res)=>{
         a
     )
 };
-
+const customer_Sell_Data_find=async(req,res)=>{
+    
+    await storage.init( /* options ... */ );
+    var id =  await storage.getItem('user_id');
+    var data= await customer_data.find(id);
+    res.status(200).json(
+        data
+    )
+};
 const Milk_Data=async(req,res)=>{
 
     await storage.init( /* options ... */ );
@@ -153,6 +170,16 @@ const Milk_Data=async(req,res)=>{
     var a=await Milk_Data_Require.create(req.body);
     res.status(200).json(
         a
+    )
+};
+
+const Milk_Data_find=async(req,res)=>{
+    
+    await storage.init( /* options ... */ );
+    var id =  await storage.getItem('user_id');
+    var data= await Milk_Data_Require.find(id);
+    res.status(200).json(
+        data
     )
 };
 
@@ -173,5 +200,15 @@ const _Product_data_= async(req,res)=>
         a
     )
 };
-module.exports={Registration_data,Login_Data,customer_Sell_Data,Registration_data_Get,Milk_Data,
-    Registration_data_Update,_Product_data_}
+
+const _Product_data_find=async(req,res)=>{
+    
+    await storage.init( /* options ... */ );
+    var id =  await storage.getItem('user_id');
+    var data= await product_Add_Data.find(id);
+    res.status(200).json(
+        data
+    )
+};
+module.exports={Registration_data,Login_Data,customer_Sell_Data,Registration_data_Name,Milk_Data,
+    Registration_data_Update,_Product_data_,Registration_data_Number,customer_Sell_Data_find,Milk_Data_find,_Product_data_find}
